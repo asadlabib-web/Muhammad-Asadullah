@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trainings — Muhammad Asadullah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1923;
+    --ink-soft: #2c3e50;
+    --paper: #f8f6f1;
+    --paper-warm: #efe9de;
+    --gold: #b08d57;
+    --gold-light: #d4b483;
+    --teal: #1a6b6b;
+    --teal-light: #2a9494;
+    --accent: #c44b2b;
+    --muted: #7a8694;
+    --border: rgba(176,141,87,0.18);
+    --radius: 12px;
+    --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink); line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(248,246,241,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 16px rgba(15,25,35,0.06);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--ink); text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-soft);
+    font-size: 0.875rem; font-weight: 500;
+    transition: color var(--transition);
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--ink); color: #fff;
+    padding: 0.4rem 1rem; border-radius: 6px;
+    font-size: 0.82rem; font-weight: 500;
+    text-decoration: none;
+    transition: background var(--transition), transform var(--transition);
+  }
+  .back-btn:hover { background: var(--teal); transform: translateX(-2px); }
+
+  /* HERO STRIP */
+  .page-hero {
+    background: var(--ink); color: #f0ece4;
+    padding: 4rem 2.5rem 3.5rem;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: var(--teal); opacity: 0.06;
+    top: -200px; right: -100px;
+  }
+  .page-hero::after {
+    content: ''; position: absolute;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: var(--gold); opacity: 0.06;
+    bottom: -150px; left: 5%;
+  }
+  .ph-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .ph-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 0.7rem;
+  }
+  .ph-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .ph-title em { color: var(--gold-light); font-style: normal; }
+  .ph-sub { color: rgba(240,236,228,0.65); font-size: 0.95rem; max-width: 560px; }
+  .ph-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+  .ph-stat { text-align: center; }
+  .ph-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--gold-light);
+  }
+  .ph-lbl { font-size: 0.72rem; color: rgba(240,236,228,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* CONTROLS */
+  .controls-bar {
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2.5rem;
+    position: sticky; top: 66px; z-index: 50;
+  }
+  .controls-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+  }
+  .search-wrap {
+    position: relative; flex: 1; min-width: 200px;
+  }
+  .search-wrap input {
+    width: 100%; padding: 0.6rem 1rem 0.6rem 2.5rem;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 0.875rem;
+    background: var(--paper); color: var(--ink);
+    outline: none; transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .search-wrap input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,107,107,0.1); }
+  .search-icon {
+    position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 0.9rem; pointer-events: none;
+  }
+  .filter-select {
+    padding: 0.6rem 2rem 0.6rem 0.9rem;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 0.85rem;
+    background: var(--paper); color: var(--ink);
+    outline: none; cursor: pointer; min-width: 160px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237a8694' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    transition: border-color var(--transition);
+  }
+  .filter-select:focus { border-color: var(--teal); outline: none; }
+  .sort-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.6rem 1rem; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--paper);
+    color: var(--ink-soft); font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; transition: all var(--transition);
+    font-family: 'Inter', sans-serif;
+  }
+  .sort-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .sort-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .results-count {
+    font-size: 0.8rem; color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* GRID */
+  .cards-section { padding: 2.5rem 2.5rem 5rem; }
+  .cards-inner { max-width: 1100px; margin: 0 auto; }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .train-card {
+    background: #fff; border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1.6rem;
+    box-shadow: 0 2px 10px rgba(15,25,35,0.04);
+    transition: transform var(--transition), box-shadow var(--transition), opacity 0.3s;
+    position: relative; overflow: hidden;
+    cursor: default;
+  }
+  .train-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(15,25,35,0.1);
+  }
+  .train-card.hidden { display: none; }
+  .train-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .train-card[data-dept="ICT"]::before { background: linear-gradient(90deg, #1a6b6b, #2a9494); }
+  .train-card[data-dept="Social Welfare"]::before { background: linear-gradient(90deg, #b08d57, #d4b483); }
+  .train-card[data-dept="Creative/NTVQF"]::before { background: linear-gradient(90deg, #c44b2b, #e07055); }
+  .train-card[data-dept="a2i / PM Office"]::before { background: linear-gradient(90deg, #6b3ba4, #9b6bc9); }
+
+  .card-dept {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.2rem 0.6rem;
+    border-radius: 4px; margin-bottom: 0.7rem;
+  }
+  .dept-ICT { background: rgba(26,107,107,0.1); color: var(--teal); }
+  .dept-sw { background: rgba(176,141,87,0.12); color: #8b6d3a; }
+  .dept-creative { background: rgba(196,75,43,0.1); color: var(--accent); }
+  .dept-a2i { background: rgba(107,59,164,0.1); color: #6b3ba4; }
+
+  .card-title {
+    font-size: 0.98rem; font-weight: 600; color: var(--ink);
+    margin-bottom: 0.5rem; line-height: 1.4;
+  }
+  .card-org { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.8rem; line-height: 1.45; }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  .card-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem; color: var(--muted);
+    background: var(--paper); padding: 0.2rem 0.6rem;
+    border-radius: 4px; border: 1px solid var(--border);
+  }
+  .card-grade {
+    font-size: 0.78rem; font-weight: 600;
+    padding: 0.2rem 0.65rem; border-radius: 4px;
+  }
+  .grade-ap { background: rgba(26,107,107,0.1); color: var(--teal); }
+  .grade-comp { background: rgba(176,141,87,0.1); color: #8b6d3a; }
+  .grade-a { background: rgba(107,59,164,0.1); color: #6b3ba4; }
+  .grade-special { background: rgba(196,75,43,0.1); color: var(--accent); }
+
+  .no-results {
+    text-align: center; padding: 4rem 1rem;
+    color: var(--muted); font-size: 1rem; display: none;
+  }
+  .no-results.visible { display: block; }
+  .no-results span { font-size: 2rem; display: block; margin-bottom: 0.8rem; }
+
+  footer {
+    background: var(--ink); color: rgba(232,224,212,0.5);
+    text-align: center; padding: 2rem 1rem;
+    font-size: 0.78rem; letter-spacing: 0.04em;
+  }
+  footer strong { color: var(--gold-light); font-weight: 500; }
+  footer a { color: var(--gold-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0.9rem 1.2rem; }
+    .nav-links { display: none; }
+    .page-hero { padding: 3rem 1.2rem 2.5rem; }
+    .controls-bar { padding: 1rem 1.2rem; top: 60px; }
+    .cards-section { padding: 1.5rem 1.2rem 4rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .ph-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">M<span>.</span>Asadullah</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#education">Education</a></li>
+    <li><a href="trainings.html" class="active">Trainings</a></li>
+  </ul>
+  <a href="index.html" class="back-btn">← Back to Home</a>
+</nav>
+
+<!-- HERO STRIP -->
+<div class="page-hero">
+  <div class="ph-inner">
+    <div class="ph-label">Professional Development</div>
+    <h1 class="ph-title">Training &amp;<br><em>Certifications</em></h1>
+    <p class="ph-sub">A comprehensive record of professional development — spanning ICT, digital content, hardware, language, and teacher training programmes across Bangladesh.</p>
+    <div class="ph-stats">
+      <div class="ph-stat">
+        <div class="ph-num">22</div>
+        <div class="ph-lbl">Total Trainings</div>
+      </div>
+      <div class="ph-stat">
+        <div class="ph-num">2008–2026</div>
+        <div class="ph-lbl">Span of Years</div>
+      </div>
+      <div class="ph-stat">
+        <div class="ph-num">8</div>
+        <div class="ph-lbl">A+ Grades</div>
+      </div>
+      <div class="ph-stat">
+        <div class="ph-num">4</div>
+        <div class="ph-lbl">Departments</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search by subject or organisation…">
+    </div>
+    <select class="filter-select" id="deptFilter">
+      <option value="all">All Departments</option>
+      <option value="ICT">Ministry of Education (ICT)</option>
+      <option value="Social Welfare">Ministry of Social Welfare</option>
+      <option value="Creative/NTVQF">Creative / NTVQF</option>
+      <option value="a2i / PM Office">a2i / PM Office</option>
+    </select>
+    <select class="filter-select" id="gradeFilter">
+      <option value="all">All Grades</option>
+      <option value="A+">A+</option>
+      <option value="Competent">Competent</option>
+      <option value="A">A</option>
+      <option value="Special">Special Awards</option>
+    </select>
+    <button class="sort-btn active" id="sortNew" onclick="setSort('new')">↓ Newest First</button>
+    <button class="sort-btn" id="sortOld" onclick="setSort('old')">↑ Oldest First</button>
+    <span class="results-count" id="resultsCount">21 results</span>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="cards-section">
+  <div class="cards-inner">
+    <div class="cards-grid" id="cardsGrid">
+
+      <div class="train-card" data-dept="a2i / PM Office" data-grade="Competent" data-year="2026" data-search="artificial intelligence ai education a2i programme ict division dshe">
+        <span class="card-dept dept-a2i">a2i / ICT Division</span>
+        <div class="card-title">Uses of Artificial Intelligence (AI) in Education</div>
+        <div class="card-org">Access to Innovate (a2i) Programme, ICT Division, in collaboration with DSHE</div>
+        <div class="card-footer">
+          <span class="card-date">18 May 2026 – 20 May 2026</span>
+          <span class="card-grade grade-comp">Completed</span>
+        </div>
+      </div>
+
+
+      <div class="train-card" data-dept="Social Welfare" data-grade="A+" data-year="2008" data-search="computer hardware ministry of social welfare kishoreganj">
+        <span class="card-dept dept-sw">Social Welfare</span>
+        <div class="card-title">Computer Hardware</div>
+        <div class="card-org">Ministry of Social Welfare, Kishoreganj, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">Jul 2008 – Dec 2008</span>
+          <span class="card-grade grade-ap">A+</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="A" data-year="2008" data-search="lab equipment operation computer application fltc project dhaka">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Lab-Equipment Operation &amp; Computer Application</div>
+        <div class="card-org">Ministry of Education, FLTC Project, Dhaka, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">5 Aug 2008 – 14 Aug 2008</span>
+          <span class="card-grade grade-a">A</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="A+" data-year="2008" data-search="arabic language fltc project dhaka">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Arabic Language Training</div>
+        <div class="card-org">Ministry of Education, FLTC Project, Dhaka, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">Jul 2008 – Sep 2008</span>
+          <span class="card-grade grade-ap">A+</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2013" data-search="digital content development training ttc sylhet">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Digital Content Development Training</div>
+        <div class="card-org">Ministry of Education, TTC, Sylhet, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">2 Feb 2013 – 13 Feb 2013</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Special" data-year="2013" data-search="search engine optimization seo ministry of ict">
+        <span class="card-dept dept-ICT">Ministry of ICT</span>
+        <div class="card-title">Search Engine Optimization (SEO)</div>
+        <div class="card-org">Ministry of Information &amp; Communication Technology</div>
+        <div class="card-footer">
+          <span class="card-date">7 Apr 2013 – 11 Apr 2013</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="a2i / PM Office" data-grade="Special" data-year="2014" data-search="multimedia content competition a2i dhaka 4th">
+        <span class="card-dept dept-a2i">a2i Programme</span>
+        <div class="card-title">2nd Round of Multimedia Content Competition</div>
+        <div class="card-org">Access to Information (a2i) Programme, Dhaka</div>
+        <div class="card-footer">
+          <span class="card-date">25 Mar 2014</span>
+          <span class="card-grade grade-special">4th Place</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="A+" data-year="2016" data-search="subject based teachers training hstti cumilla">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Subject Based Teacher's Training</div>
+        <div class="card-org">Ministry of Education, HSTTI, Cumilla, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">13 Feb 2016 – 23 Mar 2016</span>
+          <span class="card-grade grade-ap">A+</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="a2i / PM Office" data-grade="Special" data-year="2017" data-search="best content developer week a2i dhaka">
+        <span class="card-dept dept-a2i">a2i Programme</span>
+        <div class="card-title">Best Content Developer of the Week</div>
+        <div class="card-org">Access to Information (a2i) Programme, Dhaka</div>
+        <div class="card-footer">
+          <span class="card-date">2017</span>
+          <span class="card-grade grade-special">B.C.D Award</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="A+" data-year="2018" data-search="information communication technology nactar bogura ict">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Information and Communication Technology</div>
+        <div class="card-org">Ministry of Education, NACTAR, Bogura, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">7 Apr 2018 – 6 May 2018</span>
+          <span class="card-grade grade-ap">A+</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2018" data-search="computer hardware troubleshooting ttc sylhet">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Computer Hardware &amp; Troubleshooting</div>
+        <div class="card-org">Ministry of Education, TTC, Sylhet, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">2 Feb 2018 – 4 Feb 2018</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2018" data-search="c programming language nactar bogura">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">C Programming Language</div>
+        <div class="card-org">Ministry of Education, NACTAR, Bogura, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">9 Apr 2018 – 6 May 2018</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="a2i / PM Office" data-grade="Competent" data-year="2018" data-search="basic teachers training access to information prime ministers office">
+        <span class="card-dept dept-a2i">PM Office / a2i</span>
+        <div class="card-title">Basic Teacher's Training</div>
+        <div class="card-org">Access to Information Programme, Prime Minister's Office</div>
+        <div class="card-footer">
+          <span class="card-date">15 Apr 2018 – 22 Apr 2018</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="Creative/NTVQF" data-grade="Competent" data-year="2020" data-search="ntvqf creative it institute dhaka">
+        <span class="card-dept dept-creative">Creative IT / NTVQF</span>
+        <div class="card-title">NTVQF Certification</div>
+        <div class="card-org">Creative IT Institute, Dhaka</div>
+        <div class="card-footer">
+          <span class="card-date">22 Feb 2020 – 25 Feb 2020</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2020" data-search="refresher training of trainers rtot-1 ict project dhaka">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Refresher Training of Trainers — RTOT-1</div>
+        <div class="card-org">Ministry of Education, ICT Project, Dhaka, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">16 Feb 2020 – 18 Feb 2020</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2021" data-search="video editing nactar bogura">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Video Editing</div>
+        <div class="card-org">Ministry of Education, NACTAR, Bogura, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">6 Mar 2021 – 3 Apr 2021</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="A+" data-year="2021" data-search="ict course college level teachers naem dhaka">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Training on ICT Course for College Level Teachers</div>
+        <div class="card-org">Ministry of Education, NAEM, Dhaka, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">7 Dec 2021 – 27 Dec 2021</span>
+          <span class="card-grade grade-ap">A+</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2023" data-search="android app development nactar bogura">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Android App Development</div>
+        <div class="card-org">Ministry of Education, NACTAR, Bogura, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">19 Jan 2023 – 7 Mar 2023</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Competent" data-year="2024" data-search="refresher training of trainers rtot-2 ict project dhaka">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Refresher Training of Trainers — RTOT-2</div>
+        <div class="card-org">Ministry of Education, ICT Project, Dhaka, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">2024</span>
+          <span class="card-grade grade-comp">Competent</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="A+" data-year="2024" data-search="computer training course hstti cumilla">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Computer Training Course</div>
+        <div class="card-org">Ministry of Education, HSTTI, Cumilla, Bangladesh</div>
+        <div class="card-footer">
+          <span class="card-date">4 Dec 2024 – 30 Dec 2024</span>
+          <span class="card-grade grade-ap">A+</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Special" data-year="2022" data-search="best class teacher college upazila ministry of education">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Best Class Teacher Award — College (Upazila)</div>
+        <div class="card-org">Ministry of Education, Upazila Level</div>
+        <div class="card-footer">
+          <span class="card-date">21 May 2022</span>
+          <span class="card-grade grade-special">1st Place</span>
+        </div>
+      </div>
+
+      <div class="train-card" data-dept="ICT" data-grade="Special" data-year="2024" data-search="best class teacher college district ministry of education">
+        <span class="card-dept dept-ICT">Ministry of Education</span>
+        <div class="card-title">Best Class Teacher Award — College (District)</div>
+        <div class="card-org">Ministry of Education, District Level</div>
+        <div class="card-footer">
+          <span class="card-date">21 May 2024</span>
+          <span class="card-grade grade-special">1st Place</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="no-results" id="noResults">
+      <span>🔍</span>
+      No trainings match your search. Try adjusting the filters.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><a href="index.html">← Return to Portfolio</a> &nbsp;·&nbsp; © 2025 <strong>Muhammad Asadullah</strong></p>
+</footer>
+
+<script>
+  let currentSort = 'new';
+
+  function setSort(dir) {
+    currentSort = dir;
+    document.getElementById('sortNew').classList.toggle('active', dir === 'new');
+    document.getElementById('sortOld').classList.toggle('active', dir === 'old');
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const dept  = document.getElementById('deptFilter').value;
+    const grade = document.getElementById('gradeFilter').value;
+    const grid  = document.getElementById('cardsGrid');
+    const cards = Array.from(grid.querySelectorAll('.train-card'));
+
+    // Filter
+    let visible = cards.filter(card => {
+      const searchText = (card.dataset.search || '') + ' ' + card.querySelector('.card-title').textContent.toLowerCase();
+      const matchSearch = !query || searchText.includes(query);
+      const matchDept   = dept === 'all' || card.dataset.dept === dept;
+      const matchGrade  = grade === 'all' || card.dataset.grade === grade;
+      return matchSearch && matchDept && matchGrade;
+    });
+
+    // Sort
+    visible.sort((a, b) => {
+      const ya = parseInt(a.dataset.year) || 0;
+      const yb = parseInt(b.dataset.year) || 0;
+      return currentSort === 'new' ? yb - ya : ya - yb;
+    });
+
+    // Hide all
+    cards.forEach(c => { c.style.display = 'none'; });
+
+    // Show sorted visible
+    visible.forEach((card, i) => {
+      card.style.display = 'block';
+      card.style.animationDelay = (i * 0.04) + 's';
+      grid.appendChild(card);
+    });
+
+    document.getElementById('resultsCount').textContent = visible.length + ' result' + (visible.length !== 1 ? 's' : '');
+    document.getElementById('noResults').classList.toggle('visible', visible.length === 0);
+  }
+
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
+  document.getElementById('deptFilter').addEventListener('change', applyFilters);
+  document.getElementById('gradeFilter').addEventListener('change', applyFilters);
+
+  // Initial sort (newest first is default layout)
+  applyFilters();
+</script>
+</body>
+</html>
