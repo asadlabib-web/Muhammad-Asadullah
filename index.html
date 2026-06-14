@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Asadullah — Assistant Professor & ICT Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1923;
+    --ink-soft: #2c3e50;
+    --paper: #f8f6f1;
+    --paper-warm: #efe9de;
+    --gold: #b08d57;
+    --gold-light: #d4b483;
+    --teal: #1a6b6b;
+    --teal-light: #2a9494;
+    --accent: #c44b2b;
+    --muted: #7a8694;
+    --border: rgba(176,141,87,0.18);
+    --radius: 12px;
+    --transition: 0.38s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(248,246,241,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow var(--transition);
+  }
+  nav.scrolled { box-shadow: 0 4px 32px rgba(15,25,35,0.08); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-soft);
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em;
+    position: relative; padding-bottom: 2px;
+    transition: color var(--transition);
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 100%;
+    height: 1.5px; background: var(--gold);
+    transition: right var(--transition);
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { right: 0; }
+  .nav-cta {
+    background: var(--teal); color: #fff !important;
+    padding: 0.45rem 1.1rem; border-radius: 6px;
+    transition: background var(--transition), transform var(--transition) !important;
+  }
+  .nav-cta:hover { background: var(--teal-light) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    padding: 7rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.07;
+    background: var(--teal);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .hero-bg-circle:nth-child(1) { width: 600px; height: 600px; top: -200px; right: -150px; animation-delay: 0s; }
+  .hero-bg-circle:nth-child(2) { width: 400px; height: 400px; bottom: -100px; left: -80px; background: var(--gold); animation-delay: -6s; }
+  .hero-bg-circle:nth-child(3) { width: 250px; height: 250px; top: 40%; left: 30%; background: var(--accent); animation-delay: -12s; }
+  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 20px) scale(1.05); } }
+
+  .hero-content {
+    position: relative; z-index: 1; text-align: center; max-width: 820px;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--ink);
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-name em { color: var(--gold); font-style: normal; }
+  .hero-title {
+    margin-top: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--muted); font-weight: 400;
+    opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+  .hero-divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    margin: 2rem auto;
+    opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+    border-radius: 2px;
+  }
+  .hero-bio {
+    font-size: 1.05rem; color: var(--ink-soft);
+    max-width: 600px; margin: 0 auto 2.5rem;
+    opacity: 0; animation: fadeUp 0.7s 0.85s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 1s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.75rem; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    transition: transform var(--transition), box-shadow var(--transition);
+    cursor: pointer; border: none;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--teal); color: #fff;
+    box-shadow: 0 4px 18px rgba(26,107,107,0.25);
+  }
+  .btn-primary:hover { box-shadow: 0 8px 28px rgba(26,107,107,0.35); }
+  .btn-outline {
+    background: transparent; color: var(--teal);
+    border: 2px solid var(--teal);
+  }
+  .btn-outline:hover { background: var(--teal); color: #fff; }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    margin-top: 4rem;
+    opacity: 0; animation: fadeUp 0.7s 1.15s forwards;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2.5rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    font-weight: 700; color: var(--ink);
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--muted); font-size: 1rem; max-width: 580px; }
+
+  /* ── ABOUT ── */
+  #about { background: #fff; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    margin-top: 3rem;
+  }
+  .about-text p { color: var(--ink-soft); margin-bottom: 1rem; }
+  .about-info-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .info-row {
+    display: flex; gap: 1rem;
+    font-size: 0.9rem; align-items: flex-start;
+  }
+  .info-key {
+    min-width: 110px; color: var(--muted);
+    font-weight: 500; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.05em; padding-top: 2px;
+  }
+  .info-val { color: var(--ink); font-weight: 400; }
+  .about-skills-panel {
+    background: var(--paper-warm);
+    border-radius: var(--radius);
+    padding: 2rem;
+    border: 1px solid var(--border);
+  }
+  .about-skills-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; margin-bottom: 1.2rem; color: var(--ink);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    background: #fff; border: 1px solid var(--border);
+    color: var(--ink-soft); font-size: 0.8rem; padding: 0.3rem 0.75rem;
+    border-radius: 20px; font-weight: 500;
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
+  }
+  .tag:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .lang-bars { margin-top: 1.5rem; }
+  .lang-item { margin-bottom: 1rem; }
+  .lang-head { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.3rem; color: var(--ink-soft); }
+  .lang-bar { height: 4px; background: var(--paper-warm); border-radius: 2px; overflow: hidden; }
+  .lang-fill {
+    height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius: 2px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1s cubic-bezier(0.4,0,0.2,1);
+  }
+  .lang-fill.animated { transform: scaleX(1); }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--paper); }
+  .timeline { margin-top: 3rem; position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 16px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--gold), var(--teal));
+    opacity: 0.3;
+  }
+  .timeline-item {
+    position: relative; padding: 0 0 2.5rem 3.5rem;
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity 0.55s, transform 0.55s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute; left: 7px; top: 6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--gold);
+    box-shadow: 0 0 0 4px rgba(176,141,87,0.12);
+    transition: border-color var(--transition), background var(--transition);
+  }
+  .timeline-item:hover .timeline-dot { background: var(--gold); }
+  .timeline-card {
+    background: #fff; border-radius: var(--radius);
+    padding: 1.5rem 1.8rem; border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(15,25,35,0.04);
+    transition: box-shadow var(--transition), transform var(--transition);
+  }
+  .timeline-card:hover { box-shadow: 0 6px 28px rgba(15,25,35,0.1); transform: translateY(-2px); }
+  .tl-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--teal); letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+  .tl-degree { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; }
+  .tl-inst { color: var(--muted); font-size: 0.875rem; }
+  .tl-result {
+    display: inline-block; margin-top: 0.6rem;
+    background: var(--paper-warm); color: var(--gold);
+    font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 4px;
+    font-weight: 600; letter-spacing: 0.05em;
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--ink); color: #e8e0d4; }
+  #experience .section-label { color: var(--gold-light); }
+  #experience .section-title { color: #f0ece4; }
+  #experience .section-sub { color: rgba(232,224,212,0.6); }
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .exp-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(176,141,87,0.2);
+    border-radius: var(--radius); padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: background var(--transition), transform var(--transition);
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.55s, transform 0.55s, background 0.38s;
+  }
+  .exp-card.visible { opacity: 1; transform: translateY(0); }
+  .exp-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+  .exp-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--gold), var(--teal));
+  }
+  .exp-role { font-size: 1.1rem; font-weight: 600; color: #f0ece4; margin-bottom: 0.3rem; }
+  .exp-org { color: var(--gold-light); font-size: 0.875rem; margin-bottom: 0.6rem; }
+  .exp-duration {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: rgba(232,224,212,0.5); letter-spacing: 0.08em;
+  }
+  .exp-desc { color: rgba(232,224,212,0.75); font-size: 0.875rem; margin-top: 0.8rem; line-height: 1.65; }
+
+  /* ── ACHIEVEMENTS ── */
+  #achievements { background: var(--paper-warm); }
+  .achieve-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 3rem; }
+  .achieve-card {
+    background: #fff; border-radius: var(--radius); padding: 1.5rem;
+    border: 1px solid var(--border);
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(15,25,35,0.04);
+    transition: transform var(--transition), box-shadow var(--transition);
+    opacity: 0; transform: scale(0.96);
+    transition: opacity 0.5s, transform 0.5s, box-shadow 0.38s;
+  }
+  .achieve-card.visible { opacity: 1; transform: scale(1); }
+  .achieve-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(15,25,35,0.1); }
+  .achieve-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+  .achieve-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+  .achieve-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+  /* ── CONTACT ── */
+  #contact { background: #fff; }
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem;
+    align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; margin-bottom: 1.2rem; color: var(--ink);
+  }
+  .contact-info p { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+  .contact-detail {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem; color: var(--ink-soft); font-size: 0.9rem;
+  }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--paper-warm); display: grid; place-items: center;
+    font-size: 1rem; flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+  .contact-map {
+    background: var(--paper-warm); border-radius: var(--radius);
+    padding: 2rem; border: 1px solid var(--border);
+  }
+  .contact-map h4 { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .address-block {
+    background: #fff; border-radius: 8px; padding: 1.2rem;
+    border: 1px solid var(--border); margin-bottom: 1rem;
+  }
+  .address-block strong { font-size: 0.8rem; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+  .address-block p { font-size: 0.875rem; color: var(--ink-soft); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(232,224,212,0.55);
+    text-align: center; padding: 2rem 1rem;
+    font-size: 0.8rem; letter-spacing: 0.04em;
+  }
+  footer strong { color: var(--gold-light); font-weight: 500; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.25rem; }
+    .about-grid, .exp-grid, .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+    .achieve-grid { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 2rem; }
+  }
+  @media (max-width: 480px) {
+    .achieve-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">M<span>.</span>Asadullah</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="trainings.html" class="nav-cta">Trainings</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-bg-circle"></div>
+    <div class="hero-bg-circle"></div>
+    <div class="hero-bg-circle"></div>
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">✦ Assistant Professor &amp; ICT Educator</span>
+    <h1 class="hero-name">Muhammad<br><em>Asadullah</em></h1>
+    <p class="hero-title">Syed Shah Mostafa College, Moulvibazar · Al-Hadith &amp; Islamic Studies</p>
+    <div class="hero-divider"></div>
+    <p class="hero-bio">
+      A dedicated academic and technology advocate with over 15 years of teaching experience,
+      specializing in Islamic Studies, ICT education, and digital content development in Bangladesh.
+    </p>
+    <div class="hero-actions">
+      <a href="#about" class="btn btn-primary">Explore Profile ↓</a>
+      <a href="trainings.html" class="btn btn-outline">View Trainings →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years Teaching</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3×</div>
+        <div class="stat-label">Best Teacher Award</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Languages</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">01 — About</div>
+    <h2 class="section-title">Educator. Trainer.<br>Innovator.</h2>
+    <p class="section-sub">Bringing technology and scholarship together to inspire the next generation.</p>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Muhammad Asadullah is an Assistant Professor at Syed Shah Mostafa College in Moulvibazar, where he teaches Al-Hadith and Islamic Studies. Beyond the classroom, he has distinguished himself as a Master Trainer of Trainers and a pioneering ICT educator in the secondary and higher secondary education system of Bangladesh.</p>
+        <p>He serves as the ICT4E District Ambassador for Moulvibazar at the national Teacher's Portal, and was recognised as a Microsoft Innovative Expert (MIE) in 2017. He combines deep Islamic scholarship with a passion for digital skills, making him a unique bridge between tradition and technology.</p>
+        <div class="about-info-list">
+          <div class="info-row"><span class="info-key">Date of Birth</span><span class="info-val">01 March 1980</span></div>
+          <div class="info-row"><span class="info-key">Nationality</span><span class="info-val">Bangladeshi</span></div>
+          <div class="info-row"><span class="info-key">Religion</span><span class="info-val">Islam</span></div>
+          <div class="info-row"><span class="info-key">Blood Group</span><span class="info-val">A+ (Positive)</span></div>
+          <div class="info-row"><span class="info-key">Contact</span><span class="info-val">01712944296</span></div>
+          <div class="info-row"><span class="info-key">Email</span><span class="info-val">asadlabib@gmail.com</span></div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="about-skills-panel">
+          <h3>Computer Skills</h3>
+          <div class="skill-tags">
+            <span class="tag">Video Editing</span>
+            <span class="tag">Audio Editing</span>
+            <span class="tag">Android App Dev</span>
+            <span class="tag">MS Word</span>
+            <span class="tag">MS Excel</span>
+            <span class="tag">MS PowerPoint</span>
+            <span class="tag">C Programming</span>
+            <span class="tag">Hardware &amp; Repair</span>
+            <span class="tag">SEO</span>
+            <span class="tag">Digital Content</span>
+            <span class="tag">Windows OS</span>
+            <span class="tag">Internet</span>
+          </div>
+          <div class="lang-bars" style="margin-top:2rem">
+            <h3 style="margin-bottom:1rem">Language Proficiency</h3>
+            <div class="lang-item">
+              <div class="lang-head"><span>Bengali</span><span>Native</span></div>
+              <div class="lang-bar"><div class="lang-fill" data-width="1"></div></div>
+            </div>
+            <div class="lang-item">
+              <div class="lang-head"><span>Arabic</span><span>Proficient</span></div>
+              <div class="lang-bar"><div class="lang-fill" data-width="0.88"></div></div>
+            </div>
+            <div class="lang-item">
+              <div class="lang-head"><span>English</span><span>Good</span></div>
+              <div class="lang-bar"><div class="lang-fill" data-width="0.78"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">02 — Education</div>
+    <h2 class="section-title">Academic Credentials</h2>
+    <p class="section-sub">A strong foundation in Islamic theology and studies from recognised institutions.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-year">2000</div>
+          <div class="tl-degree">Master of Theology &amp; Islamic Studies (M.T.I.S)</div>
+          <div class="tl-inst">Islamic University, Kushtia · Al-Hadith &amp; Islamic Studies</div>
+          <span class="tl-result">Second Division</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-year">1999</div>
+          <div class="tl-degree">Bachelor of Theology &amp; Islamic Studies (B.T.I.S) Hons</div>
+          <div class="tl-inst">Islamic University, Kushtia · Al-Hadith &amp; Islamic Studies</div>
+          <span class="tl-result">Second Division</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-year">1996</div>
+          <div class="tl-degree">Higher Secondary Certificate (H.S.C) — Alim</div>
+          <div class="tl-inst">Abbasia Kamil Madrasha, Muktagacha, Mymensingh · Madrasha Board, Dhaka</div>
+          <span class="tl-result">Second Division</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-year">1994</div>
+          <div class="tl-degree">Secondary School Certificate (S.S.C) — Dakhil</div>
+          <div class="tl-inst">Ghior Senior Madrasa · Madrasha Board, Dhaka</div>
+          <span class="tl-result">Second Division</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-year">NTRCA</div>
+          <div class="tl-degree">Non-Government Teachers Registration (College Level)</div>
+          <div class="tl-inst">NTRCA · Arabic and Islamic Studies</div>
+          <span class="tl-result">Second Division</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">03 — Experience</div>
+    <h2 class="section-title">Professional Journey</h2>
+    <p class="section-sub">A career built on teaching, training, and digital leadership.</p>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <div class="exp-role">Assistant Professor</div>
+        <div class="exp-org">Syed Shah Mostafa College, Moulvibazar</div>
+        <div class="exp-duration">15 years 8 months 24 days</div>
+        <div class="exp-desc">Teaching Al-Hadith &amp; Islamic Studies at college level with a focus on scholarly engagement and student mentorship. Index No: 3078598, PDS No: 1004-07728.</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-role">Master Trainer of Trainers</div>
+        <div class="exp-org">ICT for Education Project (Phase-II), Govt. Teachers Training College, Sylhet</div>
+        <div class="exp-duration">Ongoing</div>
+        <div class="exp-desc">Leading teacher training programmes (BTT, HIT, AHIT) to integrate ICT into secondary and higher secondary education across Bangladesh.</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-role">Resource Person (ICT)</div>
+        <div class="exp-org">Nursing Institute, Moulvibazar</div>
+        <div class="exp-duration">10 years 8 months 2 days</div>
+        <div class="exp-desc">Providing ICT training and digital literacy guidance to nursing students and staff, bridging healthcare education with modern technology.</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-role">ICT4E District Ambassador</div>
+        <div class="exp-org">Teacher's Portal — teachers.gov.bd, Moulvibazar</div>
+        <div class="exp-duration">Ongoing</div>
+        <div class="exp-desc">Representing Moulvibazar district on the national teachers' digital platform, promoting digital content creation and ICT adoption among educators.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-label">04 — Achievements</div>
+    <h2 class="section-title">Honours &amp; Recognition</h2>
+    <p class="section-sub">Acknowledged at local, district, and national levels for excellence.</p>
+    <div class="achieve-grid">
+      <div class="achieve-card">
+        <div class="achieve-icon">🏆</div>
+        <div class="achieve-title">Best Class Teacher — District (2024)</div>
+        <div class="achieve-desc">First place at district level, Ministry of Education</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">🥇</div>
+        <div class="achieve-title">Best Class Teacher — Upazila (2022)</div>
+        <div class="achieve-desc">First place at upazila level recognition</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">🌟</div>
+        <div class="achieve-title">Qualified College-Level Class Teacher (2024)</div>
+        <div class="achieve-desc">District-level recognition by Ministry of Education</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">💡</div>
+        <div class="achieve-title">Microsoft Innovative Expert (MIE) 2017</div>
+        <div class="achieve-desc">Recognised by Microsoft for educational innovation</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">✍️</div>
+        <div class="achieve-title">Best Content Developer of the Week</div>
+        <div class="achieve-desc">Access to Information (a2i) Programme, Dhaka, 2017</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">📖</div>
+        <div class="achieve-title">Quran Recitation Champion</div>
+        <div class="achieve-desc">1st position at Islamic University — achieved 3 times</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">🎖️</div>
+        <div class="achieve-title">Multimedia Content Competition</div>
+        <div class="achieve-desc">4th place — 2nd Round, a2i Programme, 2014</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">🖥️</div>
+        <div class="achieve-title">ICT Training Pioneer</div>
+        <div class="achieve-desc">Delivered A+ grades in 5+ national ICT programmes</div>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-icon">📡</div>
+        <div class="achieve-title">Multimedia Content Competition</div>
+        <div class="achieve-desc">Participated in the 2nd Round — 2018</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">05 — Contact</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-sub">Feel free to reach out for collaboration, training enquiries, or academic discussion.</p>
+    <div class="contact-wrap">
+      <div class="contact-info reveal">
+        <h3>Contact Information</h3>
+        <p>Available for academic collaborations, ICT training engagements, and institutional partnerships.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div>01712944296</div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div>asadlabib@gmail.com</div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🏫</div>
+          <div>Syed Shah Mostafa College, Moulvibazar</div>
+        </div>
+        <div style="margin-top:2rem">
+          <a href="trainings.html" class="btn btn-primary" style="width:100%;justify-content:center">
+            View Full Training History →
+          </a>
+        </div>
+      </div>
+      <div class="contact-map reveal" style="transition-delay:0.15s">
+        <h4>Addresses</h4>
+        <div class="address-block">
+          <strong>Present Address</strong>
+          <p>Muhammad Asadullah<br>Assistant Professor<br>Syed Shah Mostafa College, Moulvibazar</p>
+        </div>
+        <div class="address-block">
+          <strong>Permanent Address</strong>
+          <p>Hedayat Monjil, Ishwar Gram<br>Post: Muktagacha<br>District: Mymensingh, Division: Mymensingh</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Muhammad Asadullah</strong> · Assistant Professor, Syed Shah Mostafa College · Designed with care</p>
+</footer>
+
+<script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Intersection observer for reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        // animate lang bars
+        el.target.querySelectorAll('.lang-fill').forEach(bar => {
+          bar.classList.add('animated');
+          bar.style.transform = `scaleX(${bar.dataset.width})`;
+        });
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .timeline-item, .exp-card, .achieve-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Stagger achieve cards
+  document.querySelectorAll('.achieve-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.07) + 's';
+  });
+  document.querySelectorAll('.exp-card').forEach((card, i) => {
+    card.style.transitionDelay = (i * 0.1) + 's';
+  });
+  document.querySelectorAll('.timeline-item').forEach((item, i) => {
+    item.style.transitionDelay = (i * 0.1) + 's';
+  });
+</script>
+</body>
+</html>
